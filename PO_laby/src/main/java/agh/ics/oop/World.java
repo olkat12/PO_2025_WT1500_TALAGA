@@ -1,7 +1,5 @@
 package agh.ics.oop;
-
 import agh.ics.oop.model.MoveDirection;
-
 
 // Uruchomienie w PowerShell:
 //$env:JAVA_HOME = "C:\Program Files\Java\jdk-25"
@@ -9,15 +7,15 @@ import agh.ics.oop.model.MoveDirection;
 
 public class World {
 
-    public static void main(String[] args) {
-
+    public static void main(String[] args)
+    {
         System.out.println("System wystartowal");
         run(OptionsParser.parse(args));
         System.out.println("System zakonczyl dzialanie");
     }
 
-    public static void run(MoveDirection[] tab) {
-
+    public static void run(MoveDirection[] tab)
+    {
         for(int i = 0; i < tab.length; i++ )
         {
             switch(tab[i])
