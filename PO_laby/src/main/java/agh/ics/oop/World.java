@@ -10,7 +10,7 @@ public class World {
     public static void main(String[] args)
     {
         System.out.println("System wystartowal");
-        run(OptionsParser.parse(args));
+        //run(OptionsParser.parse(args));
         System.out.println("System zakonczyl dzialanie");
     }
 
