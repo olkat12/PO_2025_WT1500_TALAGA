@@ -4,7 +4,7 @@
 
 I Aleksandra Talaga
 
-II 240-IDS-2S-271, Wtorek 17:00
+II 240-IDS-2S-271, Wtorek 15:00
 
 III Kapibara
 
