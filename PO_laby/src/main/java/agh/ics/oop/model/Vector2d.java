@@ -24,7 +24,7 @@ public class Vector2d {
 
     public String toString()
     {
-        return "(%d, %d)".formatted(x,y);
+        return "(%d,%d)".formatted(x,y);
         //return String.format("(%d, %d)", x, y);
     }
 
@@ -74,7 +74,7 @@ public class Vector2d {
             return false;
 
         Vector2d that = (Vector2d) other;
-        if(this.x == that.x && this.y == that.y)
+        if(x == that.x && y == that.y)
         {
             return true;
         }

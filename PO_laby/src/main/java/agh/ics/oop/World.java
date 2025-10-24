@@ -37,9 +37,6 @@ public class World {
         System.out.println(polnoc.toUnitVector());
         System.out.println(zachod.toUnitVector());
 
-
-
-
     }
 
 
