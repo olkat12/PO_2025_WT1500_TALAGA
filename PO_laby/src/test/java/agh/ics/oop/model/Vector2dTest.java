@@ -2,6 +2,7 @@ package agh.ics.oop.model;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.Objects;
 import java.util.Vector;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -16,10 +17,13 @@ class Vector2dTest {
         Vector2d v1 = new Vector2d(5, 8);
         Vector2d v2 = new Vector2d(5, 8);
         Vector2d v3 = v1;
+        Vector2d v4 = null;
+        Vector2d v5 = null;
 
         //then
         assertTrue(v1.equals(v2)); // gdy różne obiekty o tych samych x,y
         assertTrue(v1.equals(v3)); // gdy ten sam obiekt
+        assertTrue(Objects.equals(v4, v5)); // gdy oba nulle
     }
 
 
@@ -28,11 +32,13 @@ class Vector2dTest {
         // given
         Vector2d v1 = new Vector2d(5, 8);
         Vector2d v2 = new Vector2d(2, 4);
+        Vector2d v3 = null;
         String s = "napis";
 
         //then
         assertFalse(v1.equals(v2)); // gdy różne obiekty Vector2d
         assertFalse(v1.equals(s)); // gdy obiekt zupełnie innego typu
+        assertFalse(v1.equals(v3)); // gdy drugi obiekt null
     }
 
     // toString()
