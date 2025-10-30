@@ -1,33 +1,26 @@
 package agh.ics.oop;
 import agh.ics.oop.model.MoveDirection;
-import java.util.Arrays;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class OptionsParser {
 
-    public static MoveDirection[] parse(String[] args)
+    // ArrayList w przeciwieństwie do tablicy nie musi mieć podanego rozmiaru z góry
+    public static List<MoveDirection> parse(String[] args)
     {
-        MoveDirection[] enumTab = new MoveDirection[args.length];
+       List<MoveDirection> enumTab = new ArrayList<>();
 
-        int counter = 0; // licznik poprawnych elementow
-        for(int i = 0; i < args.length; i++)
+        for(String move : args)
         {
-            MoveDirection dir = switch (args[i])
+            switch (move)
             {
-                case "f" -> MoveDirection.FORWARD;
-                case "b" -> MoveDirection.BACKWARD;
-                case "r" -> MoveDirection.RIGHT;
-                case "l" -> MoveDirection.LEFT;
-                default -> null;
-            };
-            if(dir != null)
-            {
-                enumTab[counter] = dir;
-                counter++;
+                case "f" -> enumTab.add(MoveDirection.FORWARD);
+                case "b" -> enumTab.add(MoveDirection.BACKWARD);
+                case "r" -> enumTab.add(MoveDirection.RIGHT);
+                case "l" -> enumTab.add(MoveDirection.LEFT);
             }
         }
-
-        return Arrays.copyOfRange(enumTab, 0, counter);
-        // Na końcu tablicy będą same null
-        // Więc chcemy zwrócić tylko fragment od początku do licznika
+        return  enumTab;
     }
 }

@@ -1,0 +1,133 @@
+package agh.ics.oop;
+
+import agh.ics.oop.model.Animal;
+import agh.ics.oop.model.MapDirection;
+import agh.ics.oop.model.MoveDirection;
+import agh.ics.oop.model.Vector2d;
+import org.junit.jupiter.api.Test;
+
+import java.util.List;
+import java.util.Map;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+class SimulationTest {
+
+    @Test
+    void runAllProperDirections()
+    {
+        // given
+        String[] args = {"f", "r", "l", "f"};
+
+        //sprawdzone w OptionsParserTest ze parsowanie dziala dobrze
+        List<MoveDirection> movements = OptionsParser.parse(args);
+        List<Vector2d> positions = List.of(new Vector2d(0,0), new Vector2d(1,1));
+
+        // oczekiwane wyniki
+        Vector2d position1 = new Vector2d(0,1);
+        MapDirection direction1 = MapDirection.WEST;
+
+        Vector2d position2 = new Vector2d(2,1);
+        MapDirection direction2 = MapDirection.EAST;
+
+        //when
+        Simulation simulation = new Simulation(positions, movements);
+        List<Animal> animals = simulation.getAnimals();
+        simulation.run();
+
+        //then
+        assertEquals(position1, animals.get(0).getPosition());
+        assertEquals(position2, animals.get(1).getPosition());
+
+        assertEquals(direction1, animals.get(0).getMapDirection());
+        assertEquals(direction2, animals.get(1).getMapDirection());
+    }
+
+    @Test
+    void runEmptyDirections()
+    {
+        // given
+        String[] args = {};
+
+        List<MoveDirection> movements = OptionsParser.parse(args);
+        List<Vector2d> positions = List.of(new Vector2d(0,0), new Vector2d(1,1));
+
+        // oczekiwane
+        Vector2d position1 = new Vector2d(0,0);
+        MapDirection direction1 = MapDirection.NORTH;
+
+        Vector2d position2 = new Vector2d(1,1);
+        MapDirection direction2 = MapDirection.NORTH;
+
+        //when
+        Simulation simulation = new Simulation(positions, movements);
+        List<Animal> animals = simulation.getAnimals();
+        simulation.run();
+
+        //then
+        assertEquals(position1, animals.get(0).getPosition());
+        assertEquals(position2, animals.get(1).getPosition());
+
+        assertEquals(direction1, animals.get(0).getMapDirection());
+        assertEquals(direction2, animals.get(1).getMapDirection());
+    }
+
+    @Test
+    void runAllWrongDirections()
+    {
+        // given
+        String[] args = {"g", "1234", "ola"};
+
+        List<MoveDirection> movements = OptionsParser.parse(args);
+        List<Vector2d> positions = List.of(new Vector2d(0,0), new Vector2d(1,1));
+
+        // oczekiwane
+        Vector2d position1 = new Vector2d(0,0);
+        MapDirection direction1 = MapDirection.NORTH;
+
+        Vector2d position2 = new Vector2d(1,1);
+        MapDirection direction2 = MapDirection.NORTH;
+
+        //when
+        Simulation simulation = new Simulation(positions, movements);
+        List<Animal> animals = simulation.getAnimals();
+        simulation.run();
+
+        //then
+        assertEquals(position1, animals.get(0).getPosition());
+        assertEquals(position2, animals.get(1).getPosition());
+
+        assertEquals(direction1, animals.get(0).getMapDirection());
+        assertEquals(direction2, animals.get(1).getMapDirection());
+    }
+
+    @Test
+    void runProperandWrongDirections()
+    {
+        // given
+        String[] args = {"f", "r", "123", "wrong", "l", "f"};
+
+        List<MoveDirection> movements = OptionsParser.parse(args);
+        List<Vector2d> positions = List.of(new Vector2d(0,0), new Vector2d(1,1));
+
+        // oczekiwane
+        Vector2d position1 = new Vector2d(0,1);
+        MapDirection direction1 = MapDirection.WEST;
+
+        Vector2d position2 = new Vector2d(2,1);
+        MapDirection direction2 = MapDirection.EAST;
+
+        //when
+        Simulation simulation = new Simulation(positions, movements);
+        List<Animal> animals = simulation.getAnimals();
+        simulation.run();
+
+        //then
+        assertEquals(position1, animals.get(0).getPosition());
+        assertEquals(position2, animals.get(1).getPosition());
+
+        assertEquals(direction1, animals.get(0).getMapDirection());
+        assertEquals(direction2, animals.get(1).getMapDirection());
+    }
+
+}
