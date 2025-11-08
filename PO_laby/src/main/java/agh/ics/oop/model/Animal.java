@@ -70,6 +70,7 @@ public class Animal {
         {
             position = currentPosition;
         }
+
     }
 
 }

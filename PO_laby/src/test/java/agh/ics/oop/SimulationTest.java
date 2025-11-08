@@ -1,9 +1,6 @@
 package agh.ics.oop;
 
-import agh.ics.oop.model.Animal;
-import agh.ics.oop.model.MapDirection;
-import agh.ics.oop.model.MoveDirection;
-import agh.ics.oop.model.Vector2d;
+import agh.ics.oop.model.*;
 import org.junit.jupiter.api.Test;
 import java.util.List;
 
@@ -17,9 +14,9 @@ class SimulationTest {
         // given
         String[] args = {"f", "r", "l", "f"};
 
-        //sprawdzone w OptionsParserTest ze parsowanie dziala dobrze
         List<MoveDirection> movements = OptionsParser.parse(args);
         List<Vector2d> positions = List.of(new Vector2d(0,0), new Vector2d(1,1));
+        RectangularMap map = new RectangularMap(4,4);
 
         // oczekiwane wyniki
         Vector2d position1 = new Vector2d(0,1);
@@ -29,7 +26,7 @@ class SimulationTest {
         MapDirection direction2 = MapDirection.EAST;
 
         //when
-        Simulation simulation = new Simulation(positions, movements);
+        Simulation simulation = new Simulation(positions, movements, map);
         List<Animal> animals = simulation.getAnimals();
         simulation.run();
 
@@ -49,6 +46,7 @@ class SimulationTest {
 
         List<MoveDirection> movements = OptionsParser.parse(args);
         List<Vector2d> positions = List.of(new Vector2d(0,0), new Vector2d(1,1));
+        RectangularMap map = new RectangularMap(4,4);
 
         // oczekiwane
         Vector2d position1 = new Vector2d(0,0);
@@ -58,7 +56,7 @@ class SimulationTest {
         MapDirection direction2 = MapDirection.NORTH;
 
         //when
-        Simulation simulation = new Simulation(positions, movements);
+        Simulation simulation = new Simulation(positions, movements, map);
         List<Animal> animals = simulation.getAnimals();
         simulation.run();
 
@@ -78,6 +76,7 @@ class SimulationTest {
 
         List<MoveDirection> movements = OptionsParser.parse(args);
         List<Vector2d> positions = List.of(new Vector2d(0,0), new Vector2d(1,1));
+        RectangularMap map = new RectangularMap(4,4);
 
         // oczekiwane
         Vector2d position1 = new Vector2d(0,0);
@@ -87,7 +86,7 @@ class SimulationTest {
         MapDirection direction2 = MapDirection.NORTH;
 
         //when
-        Simulation simulation = new Simulation(positions, movements);
+        Simulation simulation = new Simulation(positions, movements, map);
         List<Animal> animals = simulation.getAnimals();
         simulation.run();
 
@@ -107,6 +106,7 @@ class SimulationTest {
 
         List<MoveDirection> movements = OptionsParser.parse(args);
         List<Vector2d> positions = List.of(new Vector2d(0,0), new Vector2d(1,1));
+        RectangularMap map = new RectangularMap(4,4);
 
         // oczekiwane
         Vector2d position1 = new Vector2d(0,1);
@@ -116,7 +116,7 @@ class SimulationTest {
         MapDirection direction2 = MapDirection.EAST;
 
         //when
-        Simulation simulation = new Simulation(positions, movements);
+        Simulation simulation = new Simulation(positions, movements, map);
         List<Animal> animals = simulation.getAnimals();
         simulation.run();
 
@@ -126,6 +126,64 @@ class SimulationTest {
 
         assertEquals(direction1, animals.get(0).getMapDirection());
         assertEquals(direction2, animals.get(1).getMapDirection());
+    }
+
+
+
+    // Testy Simulation i WorldMap
+
+
+
+    @Test
+    void runProperDirectionsRectangularMap()
+    {
+        // given
+        String[] args = {"f", "r"};
+
+        List<MoveDirection> movements = OptionsParser.parse(args);
+        List<Vector2d> positions = List.of(new Vector2d(0,0), new Vector2d(3,3));
+        RectangularMap map = new RectangularMap(4,7);
+
+        //when
+        Simulation simulation = new Simulation(positions, movements, map);
+        simulation.run();
+
+
+        //then
+        assertEquals(simulation.getAnimals().get(0), map.getAnimals().get(new Vector2d(0,1)));
+        assertEquals(MapDirection.NORTH, map.getAnimals().get(new Vector2d(0,1)).getMapDirection());
+        assertTrue(map.isOccupied(new Vector2d(0, 1)));
+
+        assertEquals(simulation.getAnimals().get(1), map.getAnimals().get(new Vector2d(3,3)));
+        assertEquals(MapDirection.EAST, map.getAnimals().get(new Vector2d(3,3)).getMapDirection());
+        assertTrue(map.isOccupied(new Vector2d(3, 3)));
+    }
+
+    @Test
+    void runWrongDirectionsRectangularMap()
+    {
+        // given
+        String[] args = {"ola", "ala"};
+
+        List<MoveDirection> movements = OptionsParser.parse(args);
+        List<Vector2d> positions = List.of(new Vector2d(0,0), new Vector2d(3,3));
+        RectangularMap map = new RectangularMap(4,7);
+
+        //when
+        Simulation simulation = new Simulation(positions, movements, map);
+        simulation.run();
+
+
+        //then
+        assertEquals(simulation.getAnimals().get(0), map.getAnimals().get(new Vector2d(0,0)));
+        assertEquals(MapDirection.NORTH, map.getAnimals().get(new Vector2d(0,0)).getMapDirection());
+        assertTrue(map.isOccupied(new Vector2d(0, 0)));
+        assertFalse(map.isOccupied(new Vector2d(0, 1)));
+
+        assertEquals(simulation.getAnimals().get(1), map.getAnimals().get(new Vector2d(3,3)));
+        assertEquals(MapDirection.NORTH, map.getAnimals().get(new Vector2d(0,0)).getMapDirection());
+        assertTrue(map.isOccupied(new Vector2d(3, 3)));
+
     }
 
 }

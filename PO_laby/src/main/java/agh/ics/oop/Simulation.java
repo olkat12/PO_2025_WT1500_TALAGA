@@ -10,9 +10,6 @@ import java.util.List;
 
 public class Simulation {
 
-    // Używamy ArrayList, bo często wyciągamy element o właściwym indeksie,
-    // Natomiast nie dodajemy/usuwamy elementu z listy (w tym lepsza by była LinkedList)
-
 
     // final - Możemy modyfikować tą samą listę, ale nie możemy wymienić ją na inną
     private final List<MoveDirection> movements;
