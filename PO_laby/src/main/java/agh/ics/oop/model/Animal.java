@@ -33,8 +33,15 @@ public class Animal {
     @Override
     public String toString() {
 
-        return position.toString() + " " + mapDirection.toString();
-        //return "pozycja: %s orientacja: %s".formatted(position, mapDirection)
+        //return position.toString() + " " + mapDirection.toString();
+        return switch(this.mapDirection)
+        {
+            case NORTH -> "^";
+            case EAST -> ">";
+            case SOUTH -> "v";
+            case WEST -> "<";
+        };
+
     }
 
     public boolean isAt(Vector2d position)
@@ -42,20 +49,27 @@ public class Animal {
         return Objects.equals(this.position, position);
     }
 
-    public void move(MoveDirection movement) {
+    public void move(MoveDirection movement, MoveValidator moveValidator) {
 
-        Vector2d current_position = position;
+        Vector2d currentPosition = position;
 
-        switch (movement) {
-            case RIGHT -> mapDirection = mapDirection.next();
-            case LEFT -> mapDirection = mapDirection.previous();
-            case FORWARD -> position = position.add(mapDirection.toUnitVector());
-            case BACKWARD -> position = position.subtract(mapDirection.toUnitVector());
+        mapDirection = switch (movement) {
+            case RIGHT ->  mapDirection.next();
+            case LEFT -> mapDirection.previous();
+            case FORWARD, BACKWARD -> mapDirection;
         };
-        if(position.getX() > UPPER.getX() || position.getX() < LOWER.getX()
-                || position.getY() > UPPER.getY() || position.getY() < LOWER.getY())
+
+        position = switch (movement)
         {
-            position = current_position;
+            case FORWARD -> position.add(mapDirection.toUnitVector());
+            case BACKWARD -> position.subtract(mapDirection.toUnitVector());
+            case RIGHT, LEFT -> position;
+        };
+
+        if(!moveValidator.canMoveTo(position))
+        {
+            position = currentPosition;
         }
     }
+
 }

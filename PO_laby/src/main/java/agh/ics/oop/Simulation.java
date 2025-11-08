@@ -1,9 +1,9 @@
 package agh.ics.oop;
 
-import agh.ics.oop.model.Animal;
-import agh.ics.oop.model.MoveDirection;
-import agh.ics.oop.model.Vector2d;
+import agh.ics.oop.model.*;
+
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -13,20 +13,33 @@ public class Simulation {
     // Używamy ArrayList, bo często wyciągamy element o właściwym indeksie,
     // Natomiast nie dodajemy/usuwamy elementu z listy (w tym lepsza by była LinkedList)
 
-    private List<MoveDirection> movements;
-    private List<Animal> animals = new ArrayList<>();
 
-    public List<Animal> getAnimals() {
-        return animals;
-    }
+    // final - Możemy modyfikować tą samą listę, ale nie możemy wymienić ją na inną
+    private final List<MoveDirection> movements;
+    private final List<Animal> animals = new ArrayList<>();
+    private WorldMap worldMap;
 
-    public Simulation(List<Vector2d> positions, List<MoveDirection> movements)
+
+    public Simulation(List<Vector2d> positions, List<MoveDirection> movements, WorldMap worldMap)
     {
         this.movements = movements;
+        this.worldMap = worldMap;
         for (Vector2d p : positions)
         {
-            this.animals.add(new Animal(p));
+            Animal animal = new Animal(p);
+            if(this.worldMap.place(animal))
+            {
+                animals.add(animal);
+            }
         }
+    }
+
+    public List<Animal> getAnimals() {
+
+        // żeby nie zepsuć bezpieczeństwa hermetyzacji - żeby była niemodyfikowalna
+        // Bo final przed tym nie chorni
+        // Jedynie przed tym, żeby nie zmienić listy na inną
+        return Collections.unmodifiableList(animals);
     }
 
     public void run()
@@ -35,8 +48,8 @@ public class Simulation {
         for(int i = 0; i < movements.size(); i++)
         {
             Animal animal = animals.get(i % size);
-            animal.move(movements.get(i));
-            System.out.println("Zwierze %d: %s".formatted(i % size, animal));
+            worldMap.move(animal, movements.get(i));
+            System.out.println(worldMap);
         }
     }
 }

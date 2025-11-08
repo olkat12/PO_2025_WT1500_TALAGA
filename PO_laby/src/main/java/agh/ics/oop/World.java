@@ -1,9 +1,6 @@
 package agh.ics.oop;
 
-import agh.ics.oop.model.Animal;
-import agh.ics.oop.model.MapDirection;
-import agh.ics.oop.model.MoveDirection;
-import agh.ics.oop.model.Vector2d;
+import agh.ics.oop.model.*;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -21,27 +18,13 @@ public class World {
     public static void main(String[] args) {
 
 
-        // f b r l f f r r f f f f f f f f
-        List<MoveDirection> directions = OptionsParser.parse(args);
+        RectangularMap rectangularMap = new RectangularMap(5, 5);
+        List<MoveDirection> directions = OptionsParser.parse(args);  // f b r l f b
         List<Vector2d> positions = List.of(new Vector2d(2,2), new Vector2d(3,4));
-        Simulation simulation = new Simulation(positions, directions);
+        Simulation simulation = new Simulation(positions, directions, rectangularMap);
+
+        System.out.println(rectangularMap); // stan mapy zanim ruszymy
         simulation.run();
-
-        // wydobycie zwierzęcia z listy z obiektu simulation
-        System.out.println(simulation.getAnimals().get(0).toString());
-
-
-        // Sprawdzenie zwierzęcia
-        Animal animal1 = new Animal(new Vector2d(1,2));
-        System.out.println(animal1.toString());
-        System.out.println(animal1.isAt(new Vector2d(1,2)));
-//
-//        animal1.move(MoveDirection.LEFT); // na zachod
-//        System.out.println(animal1.toString());
-//        animal1.move(MoveDirection.FORWARD);  // 0,2
-//        animal1.move(MoveDirection.FORWARD);  // -1, 2
-//        System.out.println(animal1.toString());
-
 
     }
 
