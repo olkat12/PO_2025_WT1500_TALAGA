@@ -14,7 +14,7 @@ public class Simulation {
     // final - Możemy modyfikować tą samą listę, ale nie możemy wymienić ją na inną
     private final List<MoveDirection> movements;
     private final List<Animal> animals = new ArrayList<>();
-    private WorldMap worldMap;
+    private final WorldMap worldMap;
 
 
     public Simulation(List<Vector2d> positions, List<MoveDirection> movements, WorldMap worldMap)
@@ -34,7 +34,7 @@ public class Simulation {
     public List<Animal> getAnimals() {
 
         // żeby nie zepsuć bezpieczeństwa hermetyzacji - żeby była niemodyfikowalna
-        // Bo final przed tym nie chorni
+        // Bo final przed tym nie chroni
         // Jedynie przed tym, żeby nie zmienić listy na inną
         return Collections.unmodifiableList(animals);
     }
