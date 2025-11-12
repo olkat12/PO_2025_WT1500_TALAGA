@@ -148,14 +148,21 @@ class SimulationTest {
         Simulation simulation = new Simulation(positions, movements, map);
         simulation.run();
 
+        // debug - sprawdzenie kolejności
+        System.out.println("Animals:");
+        simulation.getAnimals().forEach(System.out::println);
+
+        System.out.println("Map elements:");
+        map.getElements().forEach(System.out::println);
+
 
         //then
-        assertEquals(simulation.getAnimals().get(0), map.getAnimals().get(new Vector2d(0,1)));
-        assertEquals(MapDirection.NORTH, map.getAnimals().get(new Vector2d(0,1)).getMapDirection());
+        assertEquals(simulation.getAnimals().get(0), map.getElements().get(1));
+        assertEquals(MapDirection.NORTH, ((Animal) map.getElements().get(1)).getMapDirection());
         assertTrue(map.isOccupied(new Vector2d(0, 1)));
 
-        assertEquals(simulation.getAnimals().get(1), map.getAnimals().get(new Vector2d(3,3)));
-        assertEquals(MapDirection.EAST, map.getAnimals().get(new Vector2d(3,3)).getMapDirection());
+        assertEquals(simulation.getAnimals().get(1), map.getElements().get(0));
+        assertEquals(MapDirection.EAST, ((Animal) map.getElements().get(0)).getMapDirection());
         assertTrue(map.isOccupied(new Vector2d(3, 3)));
     }
 
@@ -175,13 +182,13 @@ class SimulationTest {
 
 
         //then
-        assertEquals(simulation.getAnimals().get(0), map.getAnimals().get(new Vector2d(0,0)));
-        assertEquals(MapDirection.NORTH, map.getAnimals().get(new Vector2d(0,0)).getMapDirection());
+        assertEquals(simulation.getAnimals().get(0), map.getElements().get(0));
+        assertEquals(MapDirection.NORTH, ((Animal) map.getElements().get(0)).getMapDirection());
         assertTrue(map.isOccupied(new Vector2d(0, 0)));
         assertFalse(map.isOccupied(new Vector2d(0, 1)));
 
-        assertEquals(simulation.getAnimals().get(1), map.getAnimals().get(new Vector2d(3,3)));
-        assertEquals(MapDirection.NORTH, map.getAnimals().get(new Vector2d(0,0)).getMapDirection());
+        assertEquals(simulation.getAnimals().get(1), map.getElements().get(1));
+        assertEquals(MapDirection.NORTH, ((Animal) map.getElements().get(1)).getMapDirection());
         assertTrue(map.isOccupied(new Vector2d(3, 3)));
 
     }

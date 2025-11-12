@@ -2,7 +2,7 @@ package agh.ics.oop.model;
 
 import java.util.Objects;
 
-public class Animal {
+public class Animal implements WorldElement {
 
     private MapDirection mapDirection;
     private Vector2d position;
@@ -15,6 +15,7 @@ public class Animal {
         return mapDirection;
     }
 
+    @Override
     public Vector2d getPosition() {
         return position;
     }
@@ -49,7 +50,7 @@ public class Animal {
         return Objects.equals(this.position, position);
     }
 
-    public void move(MoveDirection movement, MoveValidator moveValidator) {
+    void move(MoveDirection movement, MoveValidator moveValidator) {
 
         Vector2d currentPosition = position;
 
