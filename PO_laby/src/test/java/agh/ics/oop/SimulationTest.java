@@ -150,6 +150,9 @@ class SimulationTest {
 
 
         //then
+
+        // tutaj problem że zwierzę z indeksu[0] z listy w klasie Simulation jest zwierzęciem
+        // z indeksu[1] z listy w klasie RectangularMap
         assertEquals(simulation.getAnimals().get(0), map.getElements().get(1));
         assertEquals(MapDirection.NORTH, ((Animal) map.getElements().get(1)).getMapDirection());
         assertTrue(map.isOccupied(new Vector2d(0, 1)));
