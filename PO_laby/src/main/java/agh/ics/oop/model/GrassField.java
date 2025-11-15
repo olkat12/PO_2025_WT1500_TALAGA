@@ -1,18 +1,15 @@
 package agh.ics.oop.model;
 
-import agh.ics.oop.model.util.MapVisualizer;
 
 import java.util.*;
 
 public class GrassField extends AbstractWorldMap {
 
-    private int counterGrass;
     private final Map<Vector2d, Grass> grasses = new HashMap<>();
 
 
     public GrassField(int counterGrass)
     {
-        this.counterGrass = counterGrass;
 
         int upperLimit = (int) Math.sqrt(counterGrass * 10);
         Random random = new Random(12);
@@ -29,9 +26,12 @@ public class GrassField extends AbstractWorldMap {
         }
     }
 
+
+
     @Override
     public List<WorldElement> getElements()
     {
+
         List<WorldElement> elements = super.getElements();
         elements.addAll(grasses.values());
         return Collections.unmodifiableList(elements);

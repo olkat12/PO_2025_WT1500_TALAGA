@@ -17,10 +17,6 @@ public class RectangularMap extends AbstractWorldMap {
         this.upperBorder = new Vector2d(width, height);
     }
 
-//    public Map<Vector2d, Animal> getAnimals() {
-//        return Collections.unmodifiableMap(animals);
-//    }
-
 
     @Override
     public boolean canMoveTo(Vector2d position) {

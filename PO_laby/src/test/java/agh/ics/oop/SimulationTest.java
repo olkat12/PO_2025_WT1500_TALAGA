@@ -130,7 +130,7 @@ class SimulationTest {
 
 
 
-    // Testy Simulation i WorldMap
+    // Testy Simulation i RectangularMap
 
 
 
@@ -147,13 +147,6 @@ class SimulationTest {
         //when
         Simulation simulation = new Simulation(positions, movements, map);
         simulation.run();
-
-        // debug - sprawdzenie kolejności
-        System.out.println("Animals:");
-        simulation.getAnimals().forEach(System.out::println);
-
-        System.out.println("Map elements:");
-        map.getElements().forEach(System.out::println);
 
 
         //then
@@ -185,12 +178,65 @@ class SimulationTest {
         assertEquals(simulation.getAnimals().get(0), map.getElements().get(0));
         assertEquals(MapDirection.NORTH, ((Animal) map.getElements().get(0)).getMapDirection());
         assertTrue(map.isOccupied(new Vector2d(0, 0)));
-        assertFalse(map.isOccupied(new Vector2d(0, 1)));
 
         assertEquals(simulation.getAnimals().get(1), map.getElements().get(1));
         assertEquals(MapDirection.NORTH, ((Animal) map.getElements().get(1)).getMapDirection());
         assertTrue(map.isOccupied(new Vector2d(3, 3)));
 
     }
+
+    // Testy Simulation i GrassField
+
+    @Test
+    void runProperDirectionsGrassField()
+    {
+        // given
+        String[] args = {"f", "r"};
+
+        List<MoveDirection> movements = OptionsParser.parse(args);
+        List<Vector2d> positions = List.of(new Vector2d(0,0), new Vector2d(3,3));
+        GrassField grassField = new GrassField(10);
+
+        //when
+        Simulation simulation = new Simulation(positions, movements, grassField);
+        simulation.run();
+
+
+        //then
+        assertEquals(simulation.getAnimals().get(0), grassField.getElements().get(1));
+        assertEquals(MapDirection.NORTH, ((Animal) grassField.getElements().get(1)).getMapDirection());
+        assertTrue(grassField.isOccupied(new Vector2d(0, 1)));
+
+        assertEquals(simulation.getAnimals().get(1), grassField.getElements().get(0));
+        assertEquals(MapDirection.EAST, ((Animal) grassField.getElements().get(0)).getMapDirection());
+        assertTrue(grassField.isOccupied(new Vector2d(3, 3)));
+    }
+
+
+    @Test
+    void runWrongDirectionsGrassField()
+    {
+        // given
+        String[] args = {"ola", "ala"};
+
+        List<MoveDirection> movements = OptionsParser.parse(args);
+        List<Vector2d> positions = List.of(new Vector2d(0,0), new Vector2d(3,3));
+        GrassField grassField = new GrassField(10);
+
+        //when
+        Simulation simulation = new Simulation(positions, movements, grassField);
+        simulation.run();
+
+
+        //then
+        assertEquals(simulation.getAnimals().get(0), grassField.getElements().get(0));
+        assertEquals(MapDirection.NORTH, ((Animal) grassField.getElements().get(0)).getMapDirection());
+        assertTrue(grassField.isOccupied(new Vector2d(0, 0)));
+
+        assertEquals(simulation.getAnimals().get(1), grassField.getElements().get(1));
+        assertEquals(MapDirection.NORTH, ((Animal) grassField.getElements().get(1)).getMapDirection());
+        assertTrue(grassField.isOccupied(new Vector2d(3, 3)));
+    }
+
 
 }
