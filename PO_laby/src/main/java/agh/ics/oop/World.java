@@ -12,12 +12,13 @@ public class World {
 
 
         List<Vector2d> positions = List.of(new Vector2d(2,2), new Vector2d(3,4));
-        List<MoveDirection> directions = OptionsParser.parse(args);  // f b r l f b
-        RectangularMap rectangularMap = new RectangularMap(5, 5);
+        List<MoveDirection> directions = OptionsParser.parse(args);  // f f r r f f
+        //RectangularMap rectangularMap = new RectangularMap(5, 5);
+        GrassField grassField = new GrassField(10);
 
-        Simulation simulation = new Simulation(positions, directions, rectangularMap);
+        Simulation simulation = new Simulation(positions, directions, grassField);
 
-        System.out.println(rectangularMap); // stan mapy zanim ruszymy
+        System.out.println(grassField); // stan mapy zanim ruszymy
         simulation.run();
 
     }

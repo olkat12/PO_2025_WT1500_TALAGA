@@ -14,7 +14,7 @@ class RectangularMapTest {
         map.place(animal1);
 
         // when then
-        assertEquals(map.getAnimals().get(new Vector2d(2,4)), map.objectAt(new Vector2d(2,4)));
+        assertEquals(map.getElements().get(0), map.objectAt(new Vector2d(2,4)));
     }
 
 
