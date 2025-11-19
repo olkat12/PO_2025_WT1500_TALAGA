@@ -1,14 +1,33 @@
 package agh.ics.oop.model;
 
+import agh.ics.oop.model.util.IncorrectPositionException;
 import agh.ics.oop.model.util.MapVisualizer;
 
 import java.util.*;
 
 public abstract class AbstractWorldMap implements WorldMap {
 
-    public final Map<Vector2d, Animal> animals = new HashMap<>();
-    public final MapVisualizer mapVisualizer = new MapVisualizer(this);
+    protected final Map<Vector2d, Animal> animals = new HashMap<>();
+    protected final MapVisualizer mapVisualizer = new MapVisualizer(this);
+    protected List<MapChangeListener> listeners = new ArrayList<>();
 
+    public void addListener(MapChangeListener listener)
+    {
+        listeners.add(listener);
+    }
+
+    public void removeListener(MapChangeListener listener)
+    {
+        listeners.remove(listener);
+    }
+
+    public void mapChanged(String message)
+    {
+        for (MapChangeListener listener : listeners)
+        {
+            listener.mapChanged(this, message);
+        }
+    }
 
 
     public List<WorldElement> getElements()
@@ -30,23 +49,25 @@ public abstract class AbstractWorldMap implements WorldMap {
 
 
     @Override
-    public boolean place(Animal animal) {
+    public void place(Animal animal) throws IncorrectPositionException {
 
         if (!Objects.equals(this.objectAt(animal.getPosition()), animal))
         {
-            if (this.canMoveTo(animal.getPosition()))
+            if (!this.canMoveTo(animal.getPosition()))
             {
-                animals.put(animal.getPosition(), animal);
-                return true;
+                throw new IncorrectPositionException(animal.getPosition());
             }
         }
-        return false;
+        animals.put(animal.getPosition(), animal);
+        mapChanged("Animal was placed at %s".formatted(animal.getPosition()));
+
     }
 
     @Override
     public void move(Animal animal, MoveDirection direction) {
 
         Vector2d oldPosition = animal.getPosition();
+        MapDirection oldDirection = animal.getMapDirection();
 
         // czy zwierzak na mapie
         if(Objects.equals(objectAt(animal.getPosition()), animal))
@@ -56,6 +77,15 @@ public abstract class AbstractWorldMap implements WorldMap {
             animals.put(animal.getPosition(), animal);
             // jeśli zwierzak się nie może poruszyć, odłoży go na stare miejsce
         }
+        mapChanged("Animal was moved from %s %s to %s %s"
+                .formatted(oldDirection, oldPosition,animal.getMapDirection(), animal.getPosition()));
+    }
+
+    @Override
+    public String toString()
+    {
+        Boundary boundary = getCurrentBounds(); // wywoła metodę z odpowiedniej klasy dziedziczącej
+        return mapVisualizer.draw(boundary.lowerLeft(), boundary.upperRight());
     }
 
 }

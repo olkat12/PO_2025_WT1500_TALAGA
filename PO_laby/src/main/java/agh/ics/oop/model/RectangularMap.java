@@ -1,10 +1,5 @@
 package agh.ics.oop.model;
 
-import agh.ics.oop.model.util.MapVisualizer;
-
-import java.util.Collections;
-import java.util.Map;
-
 public class RectangularMap extends AbstractWorldMap {
 
 
@@ -25,10 +20,9 @@ public class RectangularMap extends AbstractWorldMap {
                 && !this.isOccupied(position);
     }
 
-    @Override
-    public String toString()
-    {
-        return mapVisualizer.draw(LOWER_BORDER, upperBorder);
-    }
 
+    @Override
+    public Boundary getCurrentBounds() {
+        return new Boundary(LOWER_BORDER, upperBorder);
+    }
 }

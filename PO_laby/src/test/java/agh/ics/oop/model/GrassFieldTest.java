@@ -1,5 +1,6 @@
 package agh.ics.oop.model;
 
+import agh.ics.oop.model.util.IncorrectPositionException;
 import org.junit.jupiter.api.Test;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
@@ -49,7 +50,7 @@ class GrassFieldTest {
     }
 
     @Test
-    public void objectAtWhenAnimal() {
+    public void objectAtWhenAnimal() throws IncorrectPositionException{
         // given
         GrassField grassField = new GrassField(10);
         Animal animal1 = new Animal(new Vector2d(2, 4));
@@ -61,7 +62,7 @@ class GrassFieldTest {
     }
 
     @Test
-    public void objectAtReturnsAnimalWhenAnimalAndGrass() {
+    public void objectAtReturnsAnimalWhenAnimalAndGrass() throws IncorrectPositionException{
         // given
         GrassField grassField = new GrassField(10);
         Animal animal1 = new Animal(new Vector2d(0, 10));
@@ -92,7 +93,7 @@ class GrassFieldTest {
     }
 
     @Test
-    public void isOccupiedTrueWhenAnimal() {
+    public void isOccupiedTrueWhenAnimal() throws IncorrectPositionException {
         // given
         GrassField grassField = new GrassField(10);
         Animal animal1 = new Animal(new Vector2d(2, 4));
@@ -123,7 +124,7 @@ class GrassFieldTest {
     }
 
     @Test
-    public void canMoveToFalseWhenAnimal() {
+    public void canMoveToFalseWhenAnimal() throws IncorrectPositionException {
         // given
         GrassField grassField = new GrassField(10);
         Animal animal1 = new Animal(new Vector2d(1, 1));
@@ -134,47 +135,49 @@ class GrassFieldTest {
     }
 
     @Test
-    public void placeAnimalTrue() {
+    public void placeAnimalTrue() throws IncorrectPositionException{
 
         // given
         GrassField grassField = new GrassField(10);
         Animal animal1 = new Animal(new Vector2d(1, 1));
+        grassField.place(animal1);
 
         // when then
-        assertTrue(grassField.place(animal1));
         assertTrue(grassField.isOccupied(new Vector2d(1, 1)));
         assertEquals(animal1, grassField.objectAt(new Vector2d(1, 1)));
     }
 
     @Test
-    public void placeAnimalFalseBecausePlaceIsOccupied() {
+    public void placeAnimalThrowsExceptionBecausePlaceIsOccupied() throws IncorrectPositionException {
 
         // given
         GrassField grassField = new GrassField(10);
         Animal animal1 = new Animal(new Vector2d(1, 1));
         Animal animal2 = new Animal(new Vector2d(1, 1));
+        grassField.place(animal1);
 
         // when then
-        assertTrue(grassField.place(animal1));
-        assertFalse(grassField.place(animal2));
+        assertThrows(IncorrectPositionException.class, () -> { grassField.place(animal2);});
         assertTrue(grassField.isOccupied(new Vector2d(1, 1)));
         assertEquals(animal1, grassField.objectAt(new Vector2d(1, 1)));
     }
 
     @Test
-    public void placeAnimalTrueWhenGrassOnPlace() {
+    public void placeAnimalTrueWhenGrassOnPlace() throws IncorrectPositionException {
 
         // given
         GrassField grassField = new GrassField(10);
         Animal animal1 = new Animal(new Vector2d(0, 10));
+        grassField.place(animal1);
+
 
         // when then
-        assertInstanceOf(Grass.class, grassField.objectAt(new Vector2d(0, 10)));
-        assertTrue(grassField.place(animal1));
+        assertInstanceOf(Animal.class, grassField.objectAt(new Vector2d(0, 10)));
+        assertEquals(animal1, grassField.objectAt(new Vector2d(0, 10)));
     }
 
     @Test
-    public void moveWhenAnimalMoves() {
+    public void moveWhenAnimalMoves() throws IncorrectPositionException {
 
         // given
         GrassField grassField = new GrassField(10);
@@ -192,7 +195,7 @@ class GrassFieldTest {
     }
 
     @Test
-    public void moveWhenAnimalDoesntMoveBecausePositionOccupied() {
+    public void moveWhenAnimalDoesntMoveBecausePositionOccupied() throws IncorrectPositionException {
         // given
         GrassField grassField = new GrassField(10);
         Animal animal1 = new Animal(new Vector2d(4, 6));

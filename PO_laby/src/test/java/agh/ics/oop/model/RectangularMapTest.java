@@ -1,13 +1,14 @@
 package agh.ics.oop.model;
 
 
+import agh.ics.oop.model.util.IncorrectPositionException;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class RectangularMapTest {
 
     @Test
-    public void objectAtWhenNotEmptyShouldReturnAnimal() {
+    public void objectAtWhenNotEmptyShouldReturnAnimal() throws IncorrectPositionException {
         // given
         RectangularMap map = new RectangularMap(4,7);
         Animal animal1 = new Animal(new Vector2d(2, 4));
@@ -29,7 +30,7 @@ class RectangularMapTest {
 
 
     @Test
-    public void isOccupiedWhenOccupiedShouldReturnTrue() {
+    public void isOccupiedWhenOccupiedShouldReturnTrue() throws IncorrectPositionException {
         // given
         RectangularMap map = new RectangularMap(4,7);
         Animal animal1 = new Animal(new Vector2d(2, 4));
@@ -70,7 +71,7 @@ class RectangularMapTest {
 
 
     @Test
-    public void canMoveToWhenFalseOccupiedPosition() {
+    public void canMoveToWhenFalseOccupiedPosition() throws IncorrectPositionException {
         // given
         RectangularMap map = new RectangularMap(3,7);
         Animal animal1 = new Animal(new Vector2d(1,1));
@@ -82,19 +83,19 @@ class RectangularMapTest {
 
 
     @Test
-    public void placeAnimalTrue(){
+    public void placeAnimalTrue() throws IncorrectPositionException{
         // given
         RectangularMap map = new RectangularMap(3,7);
         Animal animal1 = new Animal(new Vector2d(1,1));
+        map.place(animal1);
 
         // when then
-        assertTrue(map.place(animal1));
         assertTrue(map.isOccupied(new Vector2d(1,1)));
         assertEquals(animal1, map.objectAt(new Vector2d(1,1)));
     }
 
     @Test
-    public void placeAnimalFalse() {
+    public void placeAnimalExceptionBecauseOccupied() throws IncorrectPositionException {
         // given
         RectangularMap map = new RectangularMap(3,7);
         Animal animal1 = new Animal(new Vector2d(1,1));
@@ -104,16 +105,13 @@ class RectangularMapTest {
 
         map.place(animal1);
         map.place(animal3);
-
-        // when then
-        assertFalse(map.place(animal1)); // już na mapie
-        assertFalse(map.place(animal2)); // poza granicami mapy
-        assertFalse(map.place(animal4)); // zajęte miejsce
+        assertThrows(IncorrectPositionException.class, () -> {map.place(animal2);});
+        assertThrows(IncorrectPositionException.class, () -> {map.place(animal4);});
     }
 
 
     @Test
-    public void moveWhenAnimalMoves() {
+    public void moveWhenAnimalMoves() throws IncorrectPositionException {
         // given
         RectangularMap map = new RectangularMap(4, 7);
         Animal animal1 = new Animal(new Vector2d(2,2));
@@ -131,7 +129,7 @@ class RectangularMapTest {
 
 
     @Test
-    public void moveWhenAnimalDoesntMoveBehindBorders() {
+    public void moveWhenAnimalDoesntMoveBehindBorders() throws IncorrectPositionException {
         // given
         RectangularMap map = new RectangularMap(4, 7);
         Animal animal1 = new Animal(new Vector2d(4,7));
@@ -148,7 +146,7 @@ class RectangularMapTest {
     }
 
     @Test
-    public void moveWhenAnimalDoesntMoveBecausePositionOccupied() {
+    public void moveWhenAnimalDoesntMoveBecausePositionOccupied() throws IncorrectPositionException {
         // given
         RectangularMap map = new RectangularMap(4, 7);
         Animal animal1 = new Animal(new Vector2d(4,6));
