@@ -1,5 +1,7 @@
 package agh.ics.oop.model;
 
+import java.util.UUID;
+
 public class RectangularMap extends AbstractWorldMap {
 
 

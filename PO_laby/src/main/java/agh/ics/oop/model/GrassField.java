@@ -13,6 +13,7 @@ public class GrassField extends AbstractWorldMap {
         placeGrass(counterGrass);
     }
 
+
     private void placeGrass(int counterGrass) {
         int upperLimit = (int) Math.sqrt(counterGrass * 10);
         Random random = new Random(12);

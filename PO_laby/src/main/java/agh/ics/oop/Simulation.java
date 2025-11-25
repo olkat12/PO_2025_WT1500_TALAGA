@@ -8,7 +8,7 @@ import java.util.Collections;
 import java.util.List;
 
 
-public class Simulation {
+public class Simulation implements Runnable {
 
 
     // final - Możemy modyfikować tą samą listę, ale nie możemy wymienić ją na inną
@@ -31,7 +31,7 @@ public class Simulation {
             }
             catch (IncorrectPositionException e)
             {
-                System.out.println("Error message: " + e.getMessage());
+                e.printStackTrace();
             }
         }
     }
@@ -44,6 +44,7 @@ public class Simulation {
         return Collections.unmodifiableList(animals);
     }
 
+    @Override
     public void run()
     {
         int size = animals.size();
