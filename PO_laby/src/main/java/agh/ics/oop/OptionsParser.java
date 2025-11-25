@@ -19,6 +19,7 @@ public class OptionsParser {
                 case "b" -> enumTab.add(MoveDirection.BACKWARD);
                 case "r" -> enumTab.add(MoveDirection.RIGHT);
                 case "l" -> enumTab.add(MoveDirection.LEFT);
+                default -> throw new IllegalArgumentException(move + " is not legal move specification");
             }
         }
         return  enumTab;

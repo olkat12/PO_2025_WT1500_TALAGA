@@ -2,6 +2,8 @@ package agh.ics.oop;
 
 import agh.ics.oop.model.*;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -74,7 +76,19 @@ class SimulationTest {
         // given
         String[] args = {"g", "1234", "ola"};
 
-        List<MoveDirection> movements = OptionsParser.parse(args);
+        List<MoveDirection> movements = new ArrayList<>();
+
+        for (String arg : args)
+        {
+            try{
+                String[] singleArgArray = new String[]{arg};
+                List<MoveDirection> parsed = OptionsParser.parse(singleArgArray);
+                movements.addAll(parsed);
+            } catch (IllegalArgumentException ex) {
+                System.out.println("Exception message: " + ex.getMessage());
+            }
+        }
+
         List<Vector2d> positions = List.of(new Vector2d(0,0), new Vector2d(1,1));
         RectangularMap map = new RectangularMap(4,4);
 
@@ -104,7 +118,18 @@ class SimulationTest {
         // given
         String[] args = {"f", "r", "123", "wrong", "l", "f"};
 
-        List<MoveDirection> movements = OptionsParser.parse(args);
+        List<MoveDirection> movements = new ArrayList<>();
+
+        for (String arg : args)
+        {
+            try{
+                String[] singleArgArray = new String[]{arg};
+                List<MoveDirection> parsed = OptionsParser.parse(singleArgArray);
+                movements.addAll(parsed);
+            } catch (IllegalArgumentException ex) {
+                System.out.println("Exception message: " + ex.getMessage());
+            }
+        }
         List<Vector2d> positions = List.of(new Vector2d(0,0), new Vector2d(1,1));
         RectangularMap map = new RectangularMap(4,4);
 
@@ -168,7 +193,18 @@ class SimulationTest {
         // given
         String[] args = {"ola", "ala"};
 
-        List<MoveDirection> movements = OptionsParser.parse(args);
+        List<MoveDirection> movements = new ArrayList<>();
+
+        for (String arg : args)
+        {
+            try{
+                String[] singleArgArray = new String[]{arg};
+                List<MoveDirection> parsed = OptionsParser.parse(singleArgArray);
+                movements.addAll(parsed);
+            } catch (IllegalArgumentException ex) {
+                System.out.println("Exception message: " + ex.getMessage());
+            }
+        }
         List<Vector2d> positions = List.of(new Vector2d(0,0), new Vector2d(3,3));
         RectangularMap map = new RectangularMap(4,7);
 
@@ -222,7 +258,18 @@ class SimulationTest {
         // given
         String[] args = {"ola", "ala"};
 
-        List<MoveDirection> movements = OptionsParser.parse(args);
+        List<MoveDirection> movements = new ArrayList<>();
+
+        for (String arg : args)
+        {
+            try{
+                String[] singleArgArray = new String[]{arg};
+                List<MoveDirection> parsed = OptionsParser.parse(singleArgArray);
+                movements.addAll(parsed);
+            } catch (IllegalArgumentException ex) {
+                System.out.println("Exception message: " + ex.getMessage());
+            }
+        }
         List<Vector2d> positions = List.of(new Vector2d(0,0), new Vector2d(3,3));
         GrassField grassField = new GrassField(10);
 

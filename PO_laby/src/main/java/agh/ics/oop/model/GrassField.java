@@ -10,7 +10,10 @@ public class GrassField extends AbstractWorldMap {
 
     public GrassField(int counterGrass)
     {
+        placeGrass(counterGrass);
+    }
 
+    private void placeGrass(int counterGrass) {
         int upperLimit = (int) Math.sqrt(counterGrass * 10);
         Random random = new Random(12);
         while (grasses.size() < counterGrass)
@@ -27,11 +30,9 @@ public class GrassField extends AbstractWorldMap {
     }
 
 
-
     @Override
     public List<WorldElement> getElements()
     {
-
         List<WorldElement> elements = super.getElements();
         elements.addAll(grasses.values());
         return Collections.unmodifiableList(elements);
@@ -39,25 +40,8 @@ public class GrassField extends AbstractWorldMap {
 
 
     @Override
-    public WorldElement objectAt(Vector2d position) {
+    public Boundary getCurrentBounds() {
 
-        WorldElement element = super.objectAt(position);
-        if (element != null) {
-            return element;
-        }
-        return grasses.get(position);
-    }
-
-
-    @Override
-    public boolean canMoveTo(Vector2d position) {
-        return !(this.objectAt(position) instanceof Animal);
-    }
-
-
-    @Override
-    public String toString()
-    {
         // lista animals + grasses
         List<WorldElement> elements = this.getElements();
         if (!elements.isEmpty())
@@ -71,10 +55,27 @@ public class GrassField extends AbstractWorldMap {
                 upperBorder = upperBorder.upperRight(element.getPosition());
             }
 
-            return mapVisualizer.draw(lowerBorder, upperBorder);
+            return new Boundary(lowerBorder, upperBorder);
         }
-        return mapVisualizer.draw(new Vector2d(0,0), new Vector2d(0,0));
-        
+        return new Boundary(new Vector2d(0, 0), new Vector2d(0,0));
     }
 
+    @Override
+    public WorldElement objectAt(Vector2d position) {
+
+        WorldElement element = super.objectAt(position);
+        if (element != null) {
+            return element;
+        }
+        return grasses.get(position);
+
+        //return animals.containsKey(position) ? animals.get(position) : grasses.get(position);
+    }
+
+
+    @Override
+    public boolean canMoveTo(Vector2d position) {
+        return !animals.containsKey(position);
+        //return !(this.objectAt(position) instanceof Animal);
+    }
 }

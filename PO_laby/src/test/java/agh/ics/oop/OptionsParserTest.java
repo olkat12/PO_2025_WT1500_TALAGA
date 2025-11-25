@@ -64,9 +64,19 @@ class OptionsParserTest {
         // given
         String args[] = {"g", "t", "234"};
         List<MoveDirection> expectedDirections = new ArrayList<>();
+        List<MoveDirection> directions = new ArrayList<>();
 
-        //when
-        List<MoveDirection> directions = OptionsParser.parse(args);
+        // when
+        for (String arg : args)
+        {
+            try{
+                String[] singleArgArray = new String[]{arg};
+                List<MoveDirection> parsed = OptionsParser.parse(singleArgArray);
+                directions.addAll(parsed);
+            } catch (IllegalArgumentException ex) {
+                System.out.println("Exception message: " + ex.getMessage());
+            }
+        }
 
         //then
         assertEquals(expectedDirections, directions);
@@ -79,9 +89,19 @@ class OptionsParserTest {
         String args[] = {"f", "b", "123", "ola", "l"};
         List<MoveDirection> expectedDirections = List.of(MoveDirection.FORWARD, MoveDirection.BACKWARD,
                 MoveDirection.LEFT);
+        List<MoveDirection> directions = new ArrayList<>();
 
-        //when
-        List<MoveDirection> directions = OptionsParser.parse(args);
+        // when
+        for (String arg : args)
+        {
+            try{
+                String[] singleArgArray = new String[]{arg};
+                List<MoveDirection> parsed = OptionsParser.parse(singleArgArray);
+                directions.addAll(parsed);
+            } catch (IllegalArgumentException ex) {
+                System.out.println("Exception message: " + ex.getMessage());
+            }
+        }
 
         //then
         assertEquals(expectedDirections, directions);
