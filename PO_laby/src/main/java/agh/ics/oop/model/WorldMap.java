@@ -3,6 +3,8 @@ package agh.ics.oop.model;
 
 import agh.ics.oop.model.util.IncorrectPositionException;
 
+import java.util.UUID;
+
 /**
  * The interface responsible for interacting with the map of the world.
  * Assumes that Vector2d and MoveDirection classes are defined.
@@ -10,6 +12,8 @@ import agh.ics.oop.model.util.IncorrectPositionException;
  * @author apohllo, idzik
  */
 public interface WorldMap extends MoveValidator {
+
+    int getId();
 
     Boundary getCurrentBounds();
 

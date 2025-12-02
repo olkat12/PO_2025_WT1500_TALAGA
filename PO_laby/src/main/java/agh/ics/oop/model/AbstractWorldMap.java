@@ -10,6 +10,13 @@ public abstract class AbstractWorldMap implements WorldMap {
     protected final Map<Vector2d, Animal> animals = new HashMap<>();
     protected final MapVisualizer mapVisualizer = new MapVisualizer(this);
     protected List<MapChangeListener> listeners = new ArrayList<>();
+    protected int id = new Random().nextInt(1,1000);
+
+
+    @Override
+    public int getId() {
+        return id;
+    }
 
     public void addListener(MapChangeListener listener)
     {
@@ -21,7 +28,7 @@ public abstract class AbstractWorldMap implements WorldMap {
         listeners.remove(listener);
     }
 
-    public void mapChanged(String message)
+    private void mapChanged(String message)
     {
         for (MapChangeListener listener : listeners)
         {
