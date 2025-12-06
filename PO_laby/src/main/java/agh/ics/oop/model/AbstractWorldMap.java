@@ -12,6 +12,7 @@ public abstract class AbstractWorldMap implements WorldMap {
     protected List<MapChangeListener> listeners = new ArrayList<>();
     protected int id = new Random().nextInt(1,1000);
 
+    // private final UUID id = UUID.randomUUID();
 
     @Override
     public int getId() {
