@@ -1,6 +1,7 @@
 package agh.ics.oop;
 
 import agh.ics.oop.model.Animal;
+import agh.ics.oop.model.GrassField;
 import agh.ics.oop.model.RectangularMap;
 import agh.ics.oop.model.Vector2d;
 import agh.ics.oop.presenter.SimulationPresenter;
@@ -24,9 +25,13 @@ public class SimulationApp extends Application {
         BorderPane viewRoot = loader.load();
         SimulationPresenter presenter = loader.getController();
 
-        RectangularMap rectangularMap = new RectangularMap(5,10);
-        rectangularMap.addListener(presenter);
-        presenter.setWorldMap(rectangularMap);
+        //RectangularMap rectangularMap = new RectangularMap(5,10);
+        //rectangularMap.addListener(presenter);
+        //presenter.setWorldMap(rectangularMap);
+
+        GrassField grassField = new GrassField(6);
+        grassField.addListener(presenter);
+        presenter.setWorldMap(grassField);
 
 
         presenter.drawMap();

@@ -16,7 +16,7 @@ public class GrassField extends AbstractWorldMap {
 
     private void placeGrass(int counterGrass) {
         int upperLimit = (int) Math.sqrt(counterGrass * 10);
-        Random random = new Random(12);
+        Random random = new Random();
         while (grasses.size() < counterGrass)
         {
             int x = random.nextInt(0, upperLimit + 1);
