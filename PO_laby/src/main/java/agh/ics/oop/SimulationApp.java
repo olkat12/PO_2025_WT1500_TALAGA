@@ -28,10 +28,8 @@ public class SimulationApp extends Application {
         rectangularMap.addListener(presenter);
         presenter.setWorldMap(rectangularMap);
 
-        
+
         presenter.drawMap();
-        Animal animal1 = new Animal(new Vector2d(2, 5));
-        rectangularMap.place(animal1);
 
         configureStage(primaryStage, viewRoot);
         primaryStage.show();
