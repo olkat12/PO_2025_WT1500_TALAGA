@@ -7,8 +7,6 @@ class BouncyMap(val width: Int, val height: Int) : WorldMap {
         get() = _animals
 
 
-
-
     override fun objectAt(position: Vector2d): Animal? = _animals[position]
 
     override fun isOccupied(position: Vector2d): Boolean = objectAt(position) != null
@@ -28,13 +26,12 @@ class BouncyMap(val width: Int, val height: Int) : WorldMap {
             }
             else {
                 // wybicie zwierzaka
-                _animals.randomPosition()?.let { victimPos ->
-                    _animals.remove(victimPos)
-                    animal.position = victimPos
+                _animals.randomPosition()?.let {
+                    _animals.remove(it)
+                    animal.position = it
                 }
             }
         }
-
         _animals[animal.position] = animal
     }
 
@@ -45,17 +42,19 @@ class BouncyMap(val width: Int, val height: Int) : WorldMap {
         val oldPos = animal.position
 
         // Czy zwierzak na mapie
-        if(animal == objectAt(oldPos)){
+        if (_animals[oldPos] === animal) {
             animal.move(direction, this)
-            _animals.remove(oldPos)
-            place(animal)
+            if (oldPos != animal.position) {
+                _animals.remove(oldPos)
+                place(animal)
+            }
         }
 
     }
 
 
     override fun canMoveTo(position: Vector2d): Boolean {
-        return position <= Vector2d(width, height) && position >= LOWER_BOUNDARY
+        return position <= Vector2d(width-1, height-1) && position >= LOWER_BOUNDARY
     }
 
 
