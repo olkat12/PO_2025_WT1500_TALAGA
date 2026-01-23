@@ -46,7 +46,7 @@ public class World {
 
         List<Simulation> simulations = new ArrayList<>();
         Random random = new Random();
-        for(int i = 0; i < 1000; i++)
+        for(int i = 0; i < 3; i++)
         {
             int x = random.nextInt(1,10);
             AbstractWorldMap map = x % 2 == 0 ? new GrassField(7) : new RectangularMap(7,7);
