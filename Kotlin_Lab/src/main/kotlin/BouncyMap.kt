@@ -9,8 +9,7 @@ class BouncyMap(val width: Int, val height: Int) : WorldMap {
 
     override fun objectAt(position: Vector2d): Animal? = _animals[position]
 
-    override fun isOccupied(position: Vector2d): Boolean = objectAt(position) != null
-
+    override fun isOccupied(position: Vector2d) = position in animals //animals.containsKey(position)
 
     override fun place(animal: Animal) {
 
@@ -18,23 +17,19 @@ class BouncyMap(val width: Int, val height: Int) : WorldMap {
 
         _animals.values.removeIf { it === animal }
 
-        if (isOccupied(animal.position)) {
-            val freePos = _animals.randomFreePosition(Vector2d(width, height))
-            if (freePos != null) {
-                // nowa wolna pozycja
-                animal.position = freePos
-            }
-            else {
-                // wybicie zwierzaka
-                _animals.randomPosition()?.let {
-                    _animals.remove(it)
-                    animal.position = it
-                }
-            }
+        if(isOccupied(animal.position)){
+            val targetPos = _animals
+                .randomFreePosition(Vector2d(width, height))
+                ?: _animals
+                    .randomPosition()
+                    ?.also { _animals.remove(it) }
+
+            targetPos?.let { animal.position = it }
+            //if (targetPos != null) animal.position = targetPos
         }
         _animals[animal.position] = animal
-    }
 
+    }
 
 
     override fun move(animal: Animal, direction: MoveDirection) {
@@ -52,10 +47,8 @@ class BouncyMap(val width: Int, val height: Int) : WorldMap {
 
     }
 
-
     override fun canMoveTo(position: Vector2d): Boolean {
         return position <= Vector2d(width-1, height-1) && position >= LOWER_BOUNDARY
     }
-
 
 }

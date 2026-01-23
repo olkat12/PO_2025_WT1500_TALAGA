@@ -13,5 +13,4 @@ interface WorldMap : MoveValidator{
 
     fun objectAt(position: Vector2d) : Animal?
 
-
 }

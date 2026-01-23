@@ -5,23 +5,21 @@ enum class MapDirection {
     SOUTH,
     WEST;
 
-    override fun toString(): String {
-        return when(this) {
+    override fun toString() = when(this) {
             NORTH -> "Polnoc"
             EAST -> "Wschod"
             SOUTH -> "Poludnie"
             WEST -> "Zachod"
-        }
     }
 
-    fun next() : MapDirection = when (this) {
+    fun next() = when (this) {
         NORTH -> EAST
         EAST -> SOUTH
         SOUTH -> WEST
         WEST -> NORTH
     }
 
-    fun previous() : MapDirection = when (this) {
+    fun previous() = when (this) {
         NORTH -> WEST
         EAST -> NORTH
         SOUTH -> EAST

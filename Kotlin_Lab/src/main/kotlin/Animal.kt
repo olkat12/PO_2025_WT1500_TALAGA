@@ -15,9 +15,8 @@ class Animal(position : Vector2d = Vector2d(0,0)) {
     var direction: MapDirection = MapDirection.NORTH
         private set
 
-    var position: Vector2d = position
+    var position = position
         internal set
-
 
     internal fun move(movement : MoveDirection, validator : MoveValidator){
 
@@ -40,7 +39,7 @@ class Animal(position : Vector2d = Vector2d(0,0)) {
 
     }
 
-    override fun toString(): String = when(direction) {
+    override fun toString() = when(direction) {
         MapDirection.NORTH -> "^"
         MapDirection.EAST -> ">"
         MapDirection.SOUTH -> "v"
